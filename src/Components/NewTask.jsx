@@ -2,13 +2,12 @@ import { Box, Select, TextField, MenuItem, InputLabel, FormControl, Button, Typo
 import { DatePicker } from "@mui/x-date-pickers";
 import { useEffect, useState } from "react";
 
-const NewTask = ()=>{
+const NewTask = ({data, dataHandler})=>{
     const [title, setTitle] = useState('')
     const [desc, setDesc] = useState('')
     const [disabled, setDisabled] = useState(true)
     const [date, setDate] = useState('')
     const [status, setStatus] = useState('Pending')
-    const [data, setData] = useState([]);
     const onTitleChange = (e)=>{
         setTitle(e.target.value);
     }
@@ -16,23 +15,26 @@ const NewTask = ()=>{
         setDesc(e.target.value);
     }
     const onDateChange = value =>{
-        setDate(value);
+        setDate(value.$d.toString());
     }
     const onStatusChange = (e)=>{
         setStatus(e.target.value);
     }
     const onSaveHandler = (e) =>{
         e.preventDefault();
-        let newData = {title,desc,date,status}
+        let id = self.crypto.randomUUID();
+        let newData = {id, title, desc, date, status}
         let updatedData = [...data];
         updatedData.push(newData);
-        setData(updatedData);
         localStorage.setItem('taskData',JSON.stringify(updatedData))
-        console.log(updatedData);
+        dataHandler(updatedData);
+        setTitle('');
+        setDesc('');
+        setStatus('Pending');
     }
 
     useEffect(()=>{
-        if(title.trim().length>0 && date.$d != 'Invalid Date'){
+        if(title.trim().length>0 && date && date.$d != 'Invalid Date'){
             setDisabled(false);
         }
         else{
@@ -44,15 +46,15 @@ const NewTask = ()=>{
     useEffect(()=>{
         let localData = JSON.parse(localStorage.getItem('taskData'));
         if(localData){
-            setData(localData)
+            dataHandler(localData)
         }
     },[])
 
     return <Box sx={{display:"flex", flexDirection: 'column', alignItems:'center', justifyContent:'center', gap:1.5 }}>
-        <Typography variant="h3">Add New Task</Typography>
-        <TextField label='Title' variant="standard" required onChange={onTitleChange} />
-        <TextField label='Description' variant="standard" onChange={onDescChange} />
-        <DatePicker sx={{width:200}} onChange={onDateChange} />
+        <Typography variant="h4">Add New Task</Typography>
+        <TextField label='Title' value={title} variant="standard" required onChange={onTitleChange} />
+        <TextField label='Description' value={desc} variant="standard" onChange={onDescChange} />
+        <DatePicker sx={{width:200}} slotProps={{ field: { clearable: true } }} onChange={onDateChange} format="DD-MM-YYYY"/>
         <FormControl variant="standard" sx={{ m: 1, minWidth: 200 }}>
         <InputLabel id="status-label">Status</InputLabel>
         <Select
