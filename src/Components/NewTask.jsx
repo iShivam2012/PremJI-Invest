@@ -34,7 +34,7 @@ const NewTask = ({data, dataHandler})=>{
     }
 
     useEffect(()=>{
-        if(title.trim().length>0 && date && date.$d != 'Invalid Date'){
+        if(title.trim().length>0 && date && date != 'Invalid Date'){
             setDisabled(false);
         }
         else{
@@ -54,7 +54,7 @@ const NewTask = ({data, dataHandler})=>{
         <Typography variant="h4">Add New Task</Typography>
         <TextField label='Title' value={title} variant="standard" required onChange={onTitleChange} />
         <TextField label='Description' value={desc} variant="standard" onChange={onDescChange} />
-        <DatePicker sx={{width:200}} slotProps={{ field: { clearable: true } }} onChange={onDateChange} format="DD-MM-YYYY"/>
+        <DatePicker sx={{width:200}} onChange={onDateChange} format="DD-MM-YYYY"/>
         <FormControl variant="standard" sx={{ m: 1, minWidth: 200 }}>
         <InputLabel id="status-label">Status</InputLabel>
         <Select

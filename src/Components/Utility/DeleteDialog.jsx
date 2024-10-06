@@ -6,7 +6,7 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 
-const PromptDialog = ({
+const DeleteDialog = ({
     open,
     handleClose,
     onDeleteHandler
@@ -22,9 +22,8 @@ const PromptDialog = ({
       <Dialog
         open={open}
         onClose={handleClose}
-        
       >
-        <DialogTitle>Prompt</DialogTitle>
+        <DialogTitle>Delete Confirmation</DialogTitle>
         <DialogContent>
           <DialogContentText>
             Do you wish to delete this task permanently?
@@ -39,4 +38,4 @@ const PromptDialog = ({
   );
 }
 
-export default PromptDialog
+export default DeleteDialog
