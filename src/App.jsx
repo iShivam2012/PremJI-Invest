@@ -14,7 +14,7 @@ function App() {
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
     <Container>
-      <Box sx={{border: '1px dotted black', margin: 4}} > 
+      <Box sx={{margin: 4}} > 
         <Typography variant='h2' gutterBottom>Task Management Dashboard</Typography> 
       </Box>
       <NewTask data={data} dataHandler={dataHandler} />
